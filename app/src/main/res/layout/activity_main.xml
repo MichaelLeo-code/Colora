@@ -14,14 +14,14 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="8dp"
+        android:maxHeight="10dp"
         android:progressDrawable="@drawable/rslider"
         android:splitTrack="false"
+        android:thumb="@drawable/thumb"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.498" />
-
-    <!--android:progressDrawable="@drawable/transparent"-->
 
     <TextView
         android:id="@+id/textR"
@@ -44,7 +44,9 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="28dp"
         android:progressDrawable="@drawable/gslider"
+        android:maxHeight="10dp"
         android:splitTrack="false"
+        android:thumb="@drawable/thumb"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sliderR"
@@ -58,7 +60,9 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="8dp"
         android:progressDrawable="@drawable/bslider"
+        android:maxHeight="10dp"
         android:splitTrack="false"
+        android:thumb="@drawable/thumb"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sliderG"
@@ -137,6 +141,41 @@
         app:layout_constraintHorizontal_bias="0.73"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textB" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="33dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="To the test area"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.376"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.982" />
+
+    <!--<ImageView-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.029"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--app:layout_constraintVertical_bias="0.338"-->
+        <!--android:src="@drawable/animated_vector" />-->
+
+    <!--android:onClick="animate"-->
 
 
 </android.support.constraint.ConstraintLayout>

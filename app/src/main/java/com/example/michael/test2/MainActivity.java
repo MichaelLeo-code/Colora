@@ -1,14 +1,24 @@
 package com.example.michael.test2;
 
 import android.content.ClipboardManager;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.media.Image;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -29,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView colorBox;
     private TextView codeHex;
     private Button copyButton;
+    private ImageView test;
+    private Button goBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +56,30 @@ public class MainActivity extends AppCompatActivity {
         colorBox = findViewById(R.id.colorBox);
         codeHex = findViewById(R.id.codeHEX);
         copyButton = findViewById(R.id.CopyButton);
+        goBack = findViewById(R.id.go_back_button);
+        //test = findViewById(R.id.imageView);
+
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, library.class));
+            }
+        });
+
+//        test.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Drawable d = test.getDrawable();
+//
+//                if (d instanceof Animatable){
+//                    ((Animatable) d).start();
+//                }
+//            }
+//        });
 
         copyButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 String txt = codeHex.getText().toString();
                 ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 clipboardManager.setText(txt);
@@ -151,4 +183,16 @@ public class MainActivity extends AppCompatActivity {
     private String getHexColor(int r, int g, int b) {
         return String.format("#%02x%02x%02x", r, g, b);
     }
+
+//    public void animate(View view) {
+//        test = findViewById(R.id.imageView);
+//        Drawable d = test.getDrawable();
+//        if (d instanceof AnimatedVectorDrawableCompat){
+//            AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) d;
+//            avd.start();
+//        }else if (d instanceof AnimatedVectorDrawable){
+//            AnimatedVectorDrawable avd = (AnimatedVectorDrawable) d;
+//            avd.start();
+//        }
+//    }
 }
