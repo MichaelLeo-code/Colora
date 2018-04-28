@@ -2,28 +2,19 @@ package com.example.michael.test2;
 
 import android.content.ClipboardManager;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimatedVectorDrawable;
-import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.media.Image;
+import android.os.Handler;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.TreeSet;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,13 +30,27 @@ public class MainActivity extends AppCompatActivity {
     private TextView colorBox;
     private TextView codeHex;
     private Button copyButton;
-    private ImageView test;
-    private Button goBack;
+    private Button switchButton;
+    private Drawable shrinkR;
+    private Drawable growR;
+    private Drawable shrinkG;
+    private Drawable growG;
+    private Drawable shrinkB;
+    private Drawable growB;
+    private Drawable vector2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        shrinkR = getDrawable(R.drawable.avd_anim_shrink_r);
+        growR = getDrawable(R.drawable.avd_anim_r);
+        shrinkG = getDrawable(R.drawable.avd_anim_shrink_g);
+        growG = getDrawable(R.drawable.avd_anim_g);
+        shrinkB = getDrawable(R.drawable.avd_anim_shrink_b);
+        growB = getDrawable(R.drawable.avd_anim_b);
+        vector2 = getDrawable(R.drawable.vector2);
 
         textR = findViewById(R.id.textR);
         sliderR = findViewById(R.id.sliderR);
@@ -56,26 +61,15 @@ public class MainActivity extends AppCompatActivity {
         colorBox = findViewById(R.id.colorBox);
         codeHex = findViewById(R.id.codeHEX);
         copyButton = findViewById(R.id.CopyButton);
-        goBack = findViewById(R.id.go_back_button);
-        //test = findViewById(R.id.imageView);
+        switchButton = findViewById(R.id.switch_button);
+        final Handler h = new Handler();
 
-        goBack.setOnClickListener(new View.OnClickListener() {
+        switchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, library.class));
+                startActivity(new Intent(MainActivity.this, Library.class));
             }
         });
-
-//        test.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Drawable d = test.getDrawable();
-//
-//                if (d instanceof Animatable){
-//                    ((Animatable) d).start();
-//                }
-//            }
-//        });
 
         copyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,14 +102,17 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                sliderR.setThumb(growR);
+                animateR();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                sliderR.setThumb(shrinkR);
+                animateR();
             }
         });
+
         sliderG.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -126,14 +123,22 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                sliderG.setThumb(growG);
+                animateG();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                sliderG.setThumb(shrinkG);
+                animateG();
+                h.postDelayed(new Runnable() {
+                    public void run() {
+                        sliderG.setThumb(vector2);
+                    }
+                }, 100);
             }
         });
+
         sliderB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -141,17 +146,20 @@ public class MainActivity extends AppCompatActivity {
                 textB.setText(String.valueOf(progressB));
                 updateColor();
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                sliderB.setThumb(growB);
+                animateB();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                sliderB.setThumb(shrinkB);
+                animateB();
             }
         });
+
+        updateColor();
     }
 
     private void updateColor() {
@@ -172,10 +180,6 @@ public class MainActivity extends AppCompatActivity {
         sliderBbackground.setColors(colorsB);
     }
 
-    private  int TestColor1 (){
-        return  Color.rgb(255, 0,0);
-    }
-
     private int getColorValue() {
         return Color.rgb(progressR, progressG, progressB);
     }
@@ -184,15 +188,36 @@ public class MainActivity extends AppCompatActivity {
         return String.format("#%02x%02x%02x", r, g, b);
     }
 
-//    public void animate(View view) {
-//        test = findViewById(R.id.imageView);
-//        Drawable d = test.getDrawable();
-//        if (d instanceof AnimatedVectorDrawableCompat){
-//            AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) d;
-//            avd.start();
-//        }else if (d instanceof AnimatedVectorDrawable){
-//            AnimatedVectorDrawable avd = (AnimatedVectorDrawable) d;
-//            avd.start();
-//        }
-//    }
+    private void animateR() {
+        Drawable dR = sliderR.getThumb();
+        if (dR instanceof AnimatedVectorDrawableCompat){
+            AnimatedVectorDrawableCompat avdR = (AnimatedVectorDrawableCompat) dR;
+            avdR.start();
+        }else if (dR instanceof AnimatedVectorDrawable){
+            AnimatedVectorDrawable avdR = (AnimatedVectorDrawable) dR;
+            avdR.start();
+        }
+    }
+
+    private void animateG() {
+        Drawable dG = sliderG.getThumb();
+        if (dG instanceof AnimatedVectorDrawableCompat){
+            AnimatedVectorDrawableCompat avdG = (AnimatedVectorDrawableCompat) dG;
+            avdG.start();
+        }else if (dG instanceof AnimatedVectorDrawable){
+            AnimatedVectorDrawable avdG = (AnimatedVectorDrawable) dG;
+            avdG.start();
+        }
+    }
+
+    private void animateB() {
+        Drawable dB = sliderB.getThumb();
+        if (dB instanceof AnimatedVectorDrawableCompat){
+            AnimatedVectorDrawableCompat avdB = (AnimatedVectorDrawableCompat) dB;
+            avdB.start();
+        }else if (dB instanceof AnimatedVectorDrawable){
+            AnimatedVectorDrawable avdB = (AnimatedVectorDrawable) dB;
+            avdB.start();
+        }
+    }
 }
