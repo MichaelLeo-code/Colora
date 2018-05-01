@@ -10,26 +10,36 @@ import android.os.Handler;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Spannable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
     private int progressR = 0;
     private int progressG = 0;
     private int progressB = 0;
-    private TextView textR;
+    private EditText textR;
     private SeekBar sliderR;
-    private TextView textG;
+    private EditText textG;
     private SeekBar sliderG;
-    private TextView textB;
+    private EditText textB;
     private SeekBar sliderB;
     private TextView colorBox;
     private TextView codeHex;
-    private Button copyButton;
+    private ImageButton copyButton;
     private Button switchButton;
     private Drawable shrinkR;
     private Drawable growR;
@@ -37,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private Drawable growG;
     private Drawable shrinkB;
     private Drawable growB;
-    private Drawable vector2;
+//    private Toast hexCopy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         growG = getDrawable(R.drawable.avd_anim_g);
         shrinkB = getDrawable(R.drawable.avd_anim_shrink_b);
         growB = getDrawable(R.drawable.avd_anim_b);
-        vector2 = getDrawable(R.drawable.vector2);
 
         textR = findViewById(R.id.textR);
         sliderR = findViewById(R.id.sliderR);
@@ -62,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
         codeHex = findViewById(R.id.codeHEX);
         copyButton = findViewById(R.id.CopyButton);
         switchButton = findViewById(R.id.switch_button);
+
+//        hexCopy = Toast.makeText(MainActivity.this, "Hex Code Copied", Toast.LENGTH_SHORT);
+
         final Handler h = new Handler();
 
         switchButton.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
                 String txt = codeHex.getText().toString();
                 ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 clipboardManager.setText(txt);
+//                hexCopy.show();
+//                h.postDelayed(new Runnable() {
+//                    public void run() {
+//                        hexCopy.cancel();
+//                    }
+//                }, 1000);
+                animateCopyButton();
             }
         });
 
@@ -131,11 +150,6 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 sliderG.setThumb(shrinkG);
                 animateG();
-                h.postDelayed(new Runnable() {
-                    public void run() {
-                        sliderG.setThumb(vector2);
-                    }
-                }, 100);
             }
         });
 
@@ -160,6 +174,79 @@ public class MainActivity extends AppCompatActivity {
         });
 
         updateColor();
+
+        textR.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(final CharSequence s, int start, int before, int count) {
+                int selectionPlace = textR.getSelectionStart();
+                try {
+                    String text = textR.getText().toString();
+                    int textProgressR = Integer.parseInt(text);
+                    progressR = textProgressR;
+                    sliderR.setProgress(textProgressR);
+                    textR.setSelection(selectionPlace);
+                } catch (NumberFormatException nfe){
+
+                }
+            }
+            @Override
+            public void afterTextChanged(final Editable s) {
+
+            }
+        });
+
+        textG.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(final CharSequence s, int start, int before, int count) {
+                int selectionPlace = textG.getSelectionStart();
+                try {
+                    String text = textG.getText().toString();
+                    int textProgressG = Integer.parseInt(text);
+                    progressG = textProgressG;
+                    sliderG.setProgress(textProgressG);
+                    textG.setSelection(selectionPlace);
+                } catch (NumberFormatException nfe){
+
+                }
+            }
+            @Override
+            public void afterTextChanged(final Editable s) {
+
+            }
+        });
+
+        textB.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(final CharSequence s, int start, int before, int count) {
+                int selectionPlace = textB.getSelectionStart();
+                try {
+                    String text = textB.getText().toString();
+                    int textProgressB = Integer.parseInt(text);
+                    progressB = textProgressB;
+                    sliderB.setProgress(textProgressB);
+                    textB.setSelection(selectionPlace);
+                } catch (NumberFormatException nfe){
+
+                }
+            }
+            @Override
+            public void afterTextChanged(final Editable s) {
+
+            }
+        });
+
     }
 
     private void updateColor() {
@@ -218,6 +305,17 @@ public class MainActivity extends AppCompatActivity {
         }else if (dB instanceof AnimatedVectorDrawable){
             AnimatedVectorDrawable avdB = (AnimatedVectorDrawable) dB;
             avdB.start();
+        }
+    }
+
+    private void animateCopyButton(){
+        Drawable d = copyButton.getDrawable();
+        if (d instanceof AnimatedVectorDrawableCompat){
+            AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) d;
+            avd.start();
+        }else if (d instanceof AnimatedVectorDrawable) {
+            AnimatedVectorDrawable avd = (AnimatedVectorDrawable) d;
+            avd.start();
         }
     }
 }
