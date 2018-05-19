@@ -15,17 +15,5 @@
 
     </style>
 
-    <style name="ColoraActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:titleTextStyle">@style/ColoraTitle</item>
-    </style>
-
-    <style name="ColoraTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/colorAccent</item>
-    </style>
-
-    <!-- ActionBar tabs text styles -->
-    <style name="ColoraActionBarTabText" parent="Widget.AppCompat.ActionBar.TabText">
-        <item name="android:textColor">@color/colorAccent</item>
-    </style>
 
 </resources>
