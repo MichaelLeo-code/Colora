@@ -1,8 +1,16 @@
 *.iml
 .gradle
+
+# Gradle generated files
+.gradle/
+
 /local.properties
+
 /.idea/workspace.xml
 /.idea/libraries
+/.idea/codeStyles
+/.idea/caches
+
 .DS_Store
 /build
 /captures
