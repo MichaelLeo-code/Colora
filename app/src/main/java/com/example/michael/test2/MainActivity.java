@@ -8,7 +8,12 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
+import android.support.design.widget.TabItem;
+import android.support.design.widget.TabLayout;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -47,15 +52,19 @@ public class MainActivity extends AppCompatActivity {
     private Drawable shrinkB;
     private Drawable growB;
     private boolean navigationVisible = true;
-//    private Toast hexCopy;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private PageAdapter pageAdapter;
+    private TabItem tabMain;
+    private TabItem tabLibrary;
+    private TabItem tabTest;
+
+//  private Toast hexCopy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         shrinkR = getDrawable(R.drawable.avd_anim_shrink_r);
         growR = getDrawable(R.drawable.avd_anim_r);
@@ -75,7 +84,42 @@ public class MainActivity extends AppCompatActivity {
         copyButton = findViewById(R.id.CopyButton);
         switchButton = findViewById(R.id.switch_button);
 
+        tabLayout = findViewById(R.id.tabLayout);
+        tabMain = findViewById(R.id.tabMain);
+        tabLibrary = findViewById(R.id.tabLibrary);
+        tabTest = findViewById(R.id.tabTest);
+        viewPager = findViewById(R.id.viewPager);
+
+        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pageAdapter);
+
 //        hexCopy = Toast.makeText(MainActivity.this, "Hex Code Copied", Toast.LENGTH_SHORT);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 1){
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
+                }else if (tab.getPosition() == 2){
+                        tabLayout.setBackgroundColor(Color.rgb(255,255,255));
+                }else {
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorAccent));
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener((tabLayout)));
 
         final Handler h = new Handler();
 

@@ -7,12 +7,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="seekBarStyle">@style/Widget.AppCompat.SeekBar</item>
-
-        <item name="android:actionBarTabTextStyle">@style/ColoraTitle</item>
-        <item name="android:actionBarStyle">@style/ColoraActionBar</item>
-        <item name="actionBarTabTextStyle">@style/ColoraTitle</item>
-        <item name="actionBarStyle">@style/ColoraActionBar</item>
-
     </style>
 
 
