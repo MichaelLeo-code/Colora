@@ -3,6 +3,7 @@ package com.example.michael.test2;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -11,20 +12,18 @@ import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Spannable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,12 +46,16 @@ public class MainActivity extends AppCompatActivity {
     private Drawable growG;
     private Drawable shrinkB;
     private Drawable growB;
+    private boolean navigationVisible = true;
 //    private Toast hexCopy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         shrinkR = getDrawable(R.drawable.avd_anim_shrink_r);
         growR = getDrawable(R.drawable.avd_anim_r);
@@ -191,11 +194,21 @@ public class MainActivity extends AppCompatActivity {
                     textR.setSelection(selectionPlace);
                 } catch (NumberFormatException nfe){
 
+                } catch (Exception e){
+
                 }
             }
             @Override
             public void afterTextChanged(final Editable s) {
-
+                if (textR.getText().toString().matches("")){
+                    h.postDelayed(new Runnable() {
+                        public void run() {
+                            if (textR.getText().toString().matches("")){
+                                textR.setText("0");
+                            }
+                        }
+                    }, 1000);
+                }
             }
         });
 
@@ -247,6 +260,61 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.main_activity).requestFocus();
+
+        View decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener
+                (new View.OnSystemUiVisibilityChangeListener() {
+                    @Override
+                    public void onSystemUiVisibilityChange(int visibility) {
+                        if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) != 0) {
+                            // The navigation bar is hidden
+                            navigationVisible = false;
+                        } else {
+                            // The navigation bar is visible
+                            navigationVisible = true;
+                            //hideNavigationBar();
+                        }
+                    }
+                });
+
+        hideNavigationBar();
+
+        findViewById(R.id.main_activity).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                findViewById(R.id.main_activity).requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+                hideNavigationBar();
+                return false;
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_1,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_1:
+                startActivity(new Intent(MainActivity.this, Library.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void hideNavigationBar() {
+        if (!navigationVisible) return;
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE;
+        decorView.setSystemUiVisibility(uiOptions);
+        navigationVisible = false;
     }
 
     private void updateColor() {
@@ -318,4 +386,5 @@ public class MainActivity extends AppCompatActivity {
             avd.start();
         }
     }
+
 }

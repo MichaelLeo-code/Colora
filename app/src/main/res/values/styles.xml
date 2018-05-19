@@ -1,12 +1,31 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="seekBarStyle">@style/Widget.AppCompat.SeekBar</item>
+
+        <item name="android:actionBarTabTextStyle">@style/ColoraTitle</item>
+        <item name="android:actionBarStyle">@style/ColoraActionBar</item>
+        <item name="actionBarTabTextStyle">@style/ColoraTitle</item>
+        <item name="actionBarStyle">@style/ColoraActionBar</item>
+
+    </style>
+
+    <style name="ColoraActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:titleTextStyle">@style/ColoraTitle</item>
+    </style>
+
+    <style name="ColoraTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <!-- ActionBar tabs text styles -->
+    <style name="ColoraActionBarTabText" parent="Widget.AppCompat.ActionBar.TabText">
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
 </resources>

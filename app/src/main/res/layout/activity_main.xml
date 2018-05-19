@@ -5,24 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#383737"
-    tools:context="com.example.michael.test2.MainActivity">
+    tools:context="com.example.michael.test2.MainActivity"
+    android:focusableInTouchMode="true"
+    android:id="@+id/main_activity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar1" />
 
     <SeekBar
         android:id="@+id/sliderR"
         android:layout_width="230dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="32dp"
         android:maxHeight="10dp"
+        android:minHeight="10dp"
         android:progress="0"
         android:progressDrawable="@drawable/rslider"
         android:splitTrack="false"
         android:thumb="@drawable/vector2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498" />
+        app:layout_constraintTop_toBottomOf="@+id/colorBox"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/textR"
@@ -31,10 +38,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:backgroundTint="#00000000"
         android:inputType="number"
         android:maxLength="3"
-        android:textColor="#FFFFFF"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#F5F5F5"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/sliderR"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,33 +57,34 @@
         android:layout_width="230dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="28dp"
-        android:progressDrawable="@drawable/gslider"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="16dp"
         android:maxHeight="10dp"
+        android:progress="0"
+        android:progressDrawable="@drawable/gslider"
         android:splitTrack="false"
         android:thumb="@drawable/vector2"
-        android:progress="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sliderR"
-        app:layout_constraintVertical_bias="0.06999999" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <SeekBar
         android:id="@+id/sliderB"
         android:layout_width="230dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="8dp"
-        android:progressDrawable="@drawable/bslider"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="16dp"
         android:maxHeight="10dp"
+        android:progress="0"
+        android:progressDrawable="@drawable/bslider"
         android:splitTrack="false"
         android:thumb="@drawable/vector2"
-        android:progress="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sliderG"
-        app:layout_constraintVertical_bias="0.060000002" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/textG"
@@ -83,10 +93,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
+        android:backgroundTint="#00000000"
         android:inputType="number"
         android:maxLength="3"
         android:text="TextView"
-        android:textColor="#FFFFFF"
+        android:textColor="#F5F5F5"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/sliderG"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,10 +113,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:backgroundTint="#00000000"
         android:inputType="number"
         android:maxLength="3"
         android:text="TextView"
-        android:textColor="#FFFFFF"
+        android:textColor="#F5F5F5"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/sliderB"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,13 +130,16 @@
         android:id="@+id/colorBox"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/colorbox"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/codeHEX"
@@ -133,16 +148,16 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:text="#000000"
-        android:textColor="#FFFFFF"
+        android:textColor="#F5F5F5"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.372"
+        app:layout_constraintHorizontal_bias="0.353"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sliderB"
-        app:layout_constraintVertical_bias="0.415" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/CopyButton"
@@ -151,14 +166,14 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/ripple_effect"
         android:src="@drawable/avd_copy_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/codeHEX"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.73"
+        app:layout_constraintHorizontal_bias="0.678"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textB" />
+        app:layout_constraintTop_toTopOf="@+id/codeHEX"
+        app:layout_constraintVertical_bias="0.214" />
 
     <Button
         android:id="@+id/switch_button"
