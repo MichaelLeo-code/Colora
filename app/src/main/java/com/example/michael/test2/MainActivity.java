@@ -30,7 +30,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ColorSaveListener {
 
     private boolean navigationVisible = true;
 
@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private TabItem tabMain;
     private TabItem tabLibrary;
     private TabItem tabTest;
+    private int iconColor;
+    private int iconColorSelected;
 
 //  private Toast hexCopy;
 
@@ -47,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         tabLayout = findViewById(R.id.tabLayout);
         tabMain = findViewById(R.id.tabMain);
@@ -57,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
         pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pageAdapter);
+
+        iconColor = Color.rgb(137,137,137);
+        iconColorSelected = Color.rgb(245,245,245);
 
 //        hexCopy = Toast.makeText(MainActivity.this, "Hex Code Copied", Toast.LENGTH_SHORT);
 
@@ -71,11 +75,12 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     //Main fragment
                 }
+                tab.getIcon().setTint(iconColorSelected);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                tab.getIcon().setTint(iconColor);
             }
 
             @Override
@@ -88,52 +93,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         findViewById(R.id.main_activity).requestFocus();
-
-        View decorView = getWindow().getDecorView();
-        decorView.setOnSystemUiVisibilityChangeListener
-                (new View.OnSystemUiVisibilityChangeListener() {
-                    @Override
-                    public void onSystemUiVisibilityChange(int visibility) {
-                        if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) != 0) {
-                            // The navigation bar is hidden
-                            navigationVisible = false;
-                        } else {
-                            // The navigation bar is visible
-                            navigationVisible = true;
-                            //hideNavigationBar();
-                        }
-                    }
-                });
-
-        findViewById(R.id.main_activity).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                findViewById(R.id.main_activity).requestFocus();
-                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-
-                hideNavigationBar();
-                return false;
-            }
-        });
-
         hideNavigationBar();
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_1,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item_1:
-                startActivity(new Intent(MainActivity.this, Library.class));
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void hideNavigationBar() {
@@ -144,4 +105,9 @@ public class MainActivity extends AppCompatActivity {
         navigationVisible = false;
     }
 
+    @Override
+    public void onColorSave(ColorItem item) {
+        LibraryFragment libraryFragment = pageAdapter.getLibrary();
+        libraryFragment.addColor(item);
+    }
 }

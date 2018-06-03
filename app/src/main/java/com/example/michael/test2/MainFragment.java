@@ -2,6 +2,7 @@ package com.example.michael.test2;
 
 
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -24,6 +25,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -43,24 +45,37 @@ public class MainFragment extends Fragment {
     private TextView colorBox;
     private TextView codeHex;
     private ImageButton copyButton;
-    private Button switchButton;
     private Drawable shrinkR;
     private Drawable growR;
     private Drawable shrinkG;
     private Drawable growG;
     private Drawable shrinkB;
     private Drawable growB;
+    private ImageButton saveButton;
+    private EditText textHex;
+    private int colorFromHexR;
+    private int colorFromHexG;
+    private int colorFromHexB;
+    private Button buttonSwitch;
+    private int caseNumber = 1;
+
+    ColorSaveListener colorSaveListener;
+
+    private boolean navigationVisible = true;
 
     public MainFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         final FragmentActivity activity = getActivity();
+
+        if (activity instanceof ColorSaveListener) {
+            colorSaveListener = (ColorSaveListener) activity;
+        }
         Resources res = activity.getResources();
         shrinkR =  res.getDrawable(R.drawable.avd_anim_shrink_r);
         growR = res.getDrawable(R.drawable.avd_anim_r);
@@ -78,6 +93,46 @@ public class MainFragment extends Fragment {
         colorBox = view.findViewById(R.id.colorBox);
         codeHex = view.findViewById(R.id.codeHEX);
         copyButton = view.findViewById(R.id.CopyButton);
+        saveButton = view.findViewById(R.id.saveButton);
+        textHex = view.findViewById(R.id.textHex);
+        buttonSwitch = view.findViewById(R.id.buttonSwitch);
+
+        buttonSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(caseNumber == 3){
+                    caseNumber = 1;
+                }else {
+                    caseNumber = caseNumber + 1;
+                }
+                switch (caseNumber) {
+                    case 1:
+                        buttonSwitch.setText("1");
+                        break;
+                    case 2:
+                        buttonSwitch.setText("2");
+                        break;
+                    case 3:
+                        buttonSwitch.setText("3");
+                        break;
+                }
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveColor();
+                animateSaveButton();
+                saveButton.setClickable(false);
+                Handler h = new Handler();
+                h.postDelayed(new Runnable() {
+                    public void run() {
+                        saveButton.setClickable(true);
+                    }
+                }, 500);
+            }
+        });
 
         copyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +160,6 @@ public class MainFragment extends Fragment {
         textR.setText(String.valueOf(progressR));
         textG.setText(String.valueOf(progressG));
         textB.setText(String.valueOf(progressG));
-
 
         sliderR.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -255,9 +309,80 @@ public class MainFragment extends Fragment {
             }
         });
 
+        textHex.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+            @Override
+            public void onTextChanged(final CharSequence s, int start, int before, int count) {
+                int selectionPlace = textHex.getSelectionStart();
+                textHex.setSelection(selectionPlace);
+                String value = textHex.getText().toString();
+                if (!value.startsWith("#") || value.length() < 7) {
+                    h.postDelayed(new Runnable() {
+                        public void run() {
+                            textHex.setText(getHexColor(progressR, progressG, progressB));
+                        }
+                    }, 5000);
+                    return;
+                }
+                try {
+                    colorFromHexR = Integer.valueOf(value.substring( 1, 3 ), 16 );
+                    colorFromHexG = Integer.valueOf(value.substring( 3, 5 ), 16 );
+                    colorFromHexB = Integer.valueOf(value.substring( 5, 7 ), 16 );
+
+                    progressR = colorFromHexR;
+                    progressG = colorFromHexG;
+                    progressB = colorFromHexB;
+
+                    sliderR.setProgress(progressR);
+                    sliderG.setProgress(progressG);
+                    sliderB.setProgress(progressB);
+                } catch (NumberFormatException nfe){
+                    h.postDelayed(new Runnable() {
+                        public void run() {
+                            textHex.setText(getHexColor(progressR, progressG, progressB));
+                        }
+                    }, 5000);
+                } catch (Exception e){
+
+                }
+            }
+            @Override
+            public void afterTextChanged(final Editable s) {
+
+            }
+        });
+
+        View decorView = getActivity().getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener
+                (new View.OnSystemUiVisibilityChangeListener() {
+                    @Override
+                    public void onSystemUiVisibilityChange(int visibility) {
+                        if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) != 0) {
+                            // The navigation bar is hidden
+                            navigationVisible = false;
+                        } else {
+                            // The navigation bar is visible
+                            navigationVisible = true;
+                            //hideNavigationBar();
+                        }
+                    }
+                });
+
+        view.findViewById(R.id.main_fragment).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                view.findViewById(R.id.main_fragment).requestFocus();
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+
+                hideNavigationBar();
+                return false;
+            }
+        });
     }
-
 
 
     @Override
@@ -268,12 +393,18 @@ public class MainFragment extends Fragment {
     }
 
 
+    private void saveColor() {
+        if (colorSaveListener != null) {
+            colorSaveListener.onColorSave(new ColorItem(progressR, progressG, progressB));
+        }
+    }
 
     private void updateColor() {
         int colorsR[] = new int[]{Color.rgb(0, progressG, progressB), Color.rgb(255, progressG, progressB)};
         int colorsG[] = new int[]{Color.rgb(progressR, 0, progressB), Color.rgb(progressR, 255, progressB)};
         int colorsB[] = new int[]{Color.rgb(progressR, progressG, 0), Color.rgb(progressR, progressG, 255)};
         codeHex.setText(getHexColor(progressR, progressG, progressB));
+        textHex.setText(getHexColor(progressR, progressG, progressB));
         GradientDrawable background = (GradientDrawable) colorBox.getBackground();
         background.setColor(getColorValue());
 
@@ -339,4 +470,22 @@ public class MainFragment extends Fragment {
         }
     }
 
+    private void animateSaveButton(){
+        Drawable d = saveButton.getDrawable();
+        if (d instanceof AnimatedVectorDrawableCompat){
+            AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) d;
+            avd.start();
+        }else if (d instanceof AnimatedVectorDrawable) {
+            AnimatedVectorDrawable avd = (AnimatedVectorDrawable) d;
+            avd.start();
+        }
+    }
+
+    private void hideNavigationBar() {
+        if (!navigationVisible) return;
+        View decorView = getActivity().getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE;
+        decorView.setSystemUiVisibility(uiOptions);
+        navigationVisible = false;
+    }
 }

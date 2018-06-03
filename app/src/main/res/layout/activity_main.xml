@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#383737"
+    android:background="#313131"
     tools:context="com.example.michael.test2.MainActivity"
     android:focusableInTouchMode="true"
     android:id="@+id/main_activity">
@@ -29,19 +29,19 @@
             android:id="@+id/tabMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Color Picker" />
+            android:icon="@drawable/ic_colorize_black_24dp" />
 
         <android.support.design.widget.TabItem
             android:id="@+id/tabLibrary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Library" />
+            android:icon="@drawable/ic_collections_bookmark_black_24dp" />
 
         <android.support.design.widget.TabItem
             android:id="@+id/tabTest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Test" />
+            android:icon="@drawable/ic_error_outline_black_24dp" />
     </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
 
