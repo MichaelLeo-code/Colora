@@ -22,16 +22,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryFragment extends Fragment {
 
-    private ImageView test;
-    private String filename = "myfile";
+    private static final String filename = "myfile";
+    private static final String COLORS_FILE = "colors";
+    private static final String ERROR = "Error";
+
     private String fileContents = "Hello world!";
     private Button saveSomeDataButton;
     private TextView testText;
@@ -79,7 +87,7 @@ public class LibraryFragment extends Fragment {
                     getText = in.readLine();
                     testText.setText(getText);
                 } catch (IOException e) {
-                    testText.setText("Error");
+                    testText.setText(ERROR);
                 } finally {
                     if (in != null) {
                         try {
@@ -91,6 +99,7 @@ public class LibraryFragment extends Fragment {
                 }
             }
         });
+
     }
 
     @Override
@@ -107,7 +116,7 @@ public class LibraryFragment extends Fragment {
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
-            testText.setText("error");
+            testText.setText(ERROR);
         }
     }
 
@@ -158,18 +167,63 @@ public class LibraryFragment extends Fragment {
         }
     }
 
-//    public void saveColor(){
-//        ColorItemListAdapter c = null;
-//        Integer count = c.getCount();
-//        String savedColorId = count.toString();
-//        try {
-//            FileOutputStream outputStream = getActivity().openFileOutput(savedColorId, Context.MODE_PRIVATE);
-//            outputStream.write(fileContents.getBytes());
-//            outputStream.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            testText.setText("error");
-//        }
-//    }
+    @Override
+    public void onStop() {
+        save();
+        super.onStop();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        load();
+        adapter.notifyDataSetChanged();
+    }
+
+    private void load() {
+        colors.clear();
+        try {
+            BufferedReader reader = new BufferedReader( new InputStreamReader(getActivity().openFileInput(COLORS_FILE)));
+            String line;
+            while((line = reader.readLine()) != null) {
+                loadColor(line);
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+    }
+
+    private void loadColor(String line) {
+        ColorItem item = null;
+        String fields[] = line.split(",");
+        if (fields.length != 2) return;
+        String hexValue = fields[1];
+        if (hexValue.length() != 7 || !hexValue.startsWith("#")) return;
+        try {
+            int r = Integer.valueOf(hexValue.substring(1, 3), 16);
+            int g = Integer.valueOf(hexValue.substring(3, 5), 16);
+            int b = Integer.valueOf(hexValue.substring(5, 7), 16);
+            item = new ColorItem(r, g, b);
+            item.setName(fields[0]);
+        } catch (NumberFormatException nfe) {
+            return;
+        }
+        colors.add(item);
+    }
+
+    private void save(){
+        try {
+            FileOutputStream outputStream = getActivity().openFileOutput(COLORS_FILE, Context.MODE_PRIVATE);
+            Writer buf = new BufferedWriter(new OutputStreamWriter(outputStream));
+            for (ColorItem color : colors) {
+                buf.write(color.getName() + "," + color.getHexValue() + "\n");
+            }
+            buf.flush();
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            testText.setText(ERROR);
+        }
+    }
 
 }

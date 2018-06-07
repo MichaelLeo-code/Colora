@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".RGBLayoutFragment"
+    tools:context=".CMYKLayoutFragment"
     android:focusableInTouchMode="true"
-    android:id="@+id/rgblayout_fragment"
+    android:id="@+id/cmyklayout_fragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SeekBar
-        android:id="@+id/sliderR"
+        android:id="@+id/sliderC"
         android:layout_width="230dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/textR"
+        android:id="@+id/textC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -37,17 +37,17 @@
         android:maxLength="3"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#F5F5F5"
+        android:textColor="#000000"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/sliderR"
+        app:layout_constraintBottom_toBottomOf="@+id/sliderC"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/sliderR"
-        app:layout_constraintTop_toTopOf="@+id/sliderR"
+        app:layout_constraintStart_toEndOf="@+id/sliderC"
+        app:layout_constraintTop_toTopOf="@+id/sliderC"
         app:layout_constraintVertical_bias="1.0" />
 
     <SeekBar
-        android:id="@+id/sliderG"
+        android:id="@+id/sliderM"
         android:layout_width="230dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
@@ -60,11 +60,11 @@
         android:thumb="@drawable/vector2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sliderR"
+        app:layout_constraintTop_toBottomOf="@+id/sliderC"
         app:layout_constraintVertical_bias="0.0" />
 
     <SeekBar
-        android:id="@+id/sliderB"
+        android:id="@+id/sliderY"
         android:layout_width="230dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
@@ -77,11 +77,11 @@
         android:thumb="@drawable/vector2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sliderG"
+        app:layout_constraintTop_toBottomOf="@+id/sliderM"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/textG"
+        android:id="@+id/textM"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -90,17 +90,17 @@
         android:inputType="number"
         android:maxLength="3"
         android:text="TextView"
-        android:textColor="#F5F5F5"
+        android:textColor="#000000"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/sliderG"
+        app:layout_constraintBottom_toBottomOf="@+id/sliderM"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/sliderG"
-        app:layout_constraintTop_toTopOf="@+id/sliderG"
+        app:layout_constraintStart_toEndOf="@+id/sliderM"
+        app:layout_constraintTop_toTopOf="@+id/sliderM"
         app:layout_constraintVertical_bias="1.0" />
 
     <EditText
-        android:id="@+id/textB"
+        android:id="@+id/textY"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -109,12 +109,50 @@
         android:inputType="number"
         android:maxLength="3"
         android:text="TextView"
-        android:textColor="#F5F5F5"
+        android:textColor="#000000"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/sliderB"
+        app:layout_constraintBottom_toBottomOf="@+id/sliderY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/sliderG"
-        app:layout_constraintTop_toTopOf="@+id/sliderB"
+        app:layout_constraintStart_toEndOf="@+id/sliderM"
+        app:layout_constraintTop_toTopOf="@+id/sliderY"
         app:layout_constraintVertical_bias="1.0" />
+
+    <SeekBar
+        android:id="@+id/sliderK"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="16dp"
+        android:maxHeight="10dp"
+        android:progress="0"
+        android:progressDrawable="@drawable/bslider"
+        android:splitTrack="false"
+        android:thumb="@drawable/vector2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sliderY"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/textK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:backgroundTint="#00000000"
+        android:inputType="number"
+        android:maxLength="3"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/sliderK"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/sliderK"
+        app:layout_constraintTop_toTopOf="@+id/sliderK"
+        app:layout_constraintVertical_bias="0.0" />
+
 </android.support.constraint.ConstraintLayout>

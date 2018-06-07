@@ -5,14 +5,12 @@ public class ColorItem {
     private int r;
     private int g;
     private int b;
-    private String name;
-    private String hexValue;
+    private String name = "noname";
 
     public ColorItem(int r, int g, int b) {
         this.r = r;
         this.g = g;
         this.b = b;
-        this.hexValue = String.format("#%02x%02x%02x", r, g, b);
     }
 
 
@@ -25,12 +23,9 @@ public class ColorItem {
     }
 
     public String getHexValue() {
-        return hexValue;
+        return String.format("#%02x%02x%02x", r, g, b);
     }
 
-    public void setHexValue(String hexValue) {
-        this.hexValue = hexValue;
-    }
 
     public int getR() {
         return r;
