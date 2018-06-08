@@ -13,7 +13,8 @@
 #.idea/dictionaries
 #.idea/libraries
 #.idea/caches
-**/.idea/
+.idea/
+
 
 .DS_Store
 /build
