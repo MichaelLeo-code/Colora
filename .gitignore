@@ -6,13 +6,10 @@
 
 /local.properties
 
-#.idea/workspace.xml
-#.idea/tasks.xml
-#.idea/gradle.xml
-#.idea/assetWizardSettings.xml
-#.idea/dictionaries
-#.idea/libraries
-#.idea/caches
+#/.idea/workspace.xml
+#/.idea/libraries
+#/.idea/codeStyles
+#/.idea/caches
 .idea/
 
 
