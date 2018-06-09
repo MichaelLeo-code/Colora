@@ -28,12 +28,12 @@ public class GradientSeekBar implements SeekBar.OnSeekBarChangeListener, TextWat
         shrinkAnimation = r.getDrawable(shrinkResId).mutate();
         growAnimation = r.getDrawable(growResId).mutate();
 
-        slider = v.findViewById(sliderId);
+        slider = (SeekBar) v.findViewById(sliderId);
         slider.setProgress(progress);
         slider.getProgressDrawable().mutate();
         slider.setMax(max);
 
-        text = v.findViewById(textId);
+        text = (EditText) v.findViewById(textId);
         text.setText(String.valueOf(progress));
 
         progress = 0;
@@ -124,8 +124,8 @@ public class GradientSeekBar implements SeekBar.OnSeekBarChangeListener, TextWat
 
     }
     public void setColors(int[] colors) {
-        GradientDrawable sliderRbackground = (GradientDrawable) slider.getProgressDrawable();
-        sliderRbackground.setColors(colors);
+        GradientDrawable sliderBackground = (GradientDrawable) slider.getProgressDrawable();
+        sliderBackground.setColors(colors);
     }
 
     public void listen() {

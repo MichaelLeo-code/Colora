@@ -83,13 +83,13 @@ public class MainFragment extends Fragment implements ColorChangeListener {
         }
         Resources res = activity.getResources();
 
-        sliderR = new GradientSeekBar(res, view, R.id.sliderR, R.id.textR, R.drawable.avd_anim_shrink_r, R.drawable.avd_anim_r, 255, this);
-        sliderG = new GradientSeekBar(res, view, R.id.sliderG, R.id.textG, R.drawable.avd_anim_shrink_r, R.drawable.avd_anim_r, 255, this);
-        sliderB = new GradientSeekBar(res, view, R.id.sliderB, R.id.textB, R.drawable.avd_anim_shrink_r, R.drawable.avd_anim_r, 255, this);
-        sliderC = new GradientSeekBar(res, view, R.id.sliderC, R.id.textC, R.drawable.avd_anim_shrink_r, R.drawable.avd_anim_r, 100, this);
-        sliderM = new GradientSeekBar(res, view, R.id.sliderM, R.id.textM, R.drawable.avd_anim_shrink_r, R.drawable.avd_anim_r, 100, this);
-        sliderY = new GradientSeekBar(res, view, R.id.sliderY, R.id.textY, R.drawable.avd_anim_shrink_r, R.drawable.avd_anim_r, 100, this);
-        sliderK = new GradientSeekBar(res, view, R.id.sliderK, R.id.textK, R.drawable.avd_anim_shrink_r, R.drawable.avd_anim_r, 100, this);
+        sliderR = new GradientSeekBar(res, view, R.id.sliderR, R.id.textR, R.drawable.avd_anim_shrink, R.drawable.avd_anim_grow, 255, this);
+        sliderG = new GradientSeekBar(res, view, R.id.sliderG, R.id.textG, R.drawable.avd_anim_shrink, R.drawable.avd_anim_grow, 255, this);
+        sliderB = new GradientSeekBar(res, view, R.id.sliderB, R.id.textB, R.drawable.avd_anim_shrink, R.drawable.avd_anim_grow, 255, this);
+        sliderC = new GradientSeekBar(res, view, R.id.sliderC, R.id.textC, R.drawable.avd_anim_shrink, R.drawable.avd_anim_grow, 100, this);
+        sliderM = new GradientSeekBar(res, view, R.id.sliderM, R.id.textM, R.drawable.avd_anim_shrink, R.drawable.avd_anim_grow, 100, this);
+        sliderY = new GradientSeekBar(res, view, R.id.sliderY, R.id.textY, R.drawable.avd_anim_shrink, R.drawable.avd_anim_grow, 100, this);
+        sliderK = new GradientSeekBar(res, view, R.id.sliderK, R.id.textK, R.drawable.avd_anim_shrink, R.drawable.avd_anim_grow, 100, this);
 
         sliderR.listen();
         sliderG.listen();
