@@ -1,6 +1,7 @@
 package com.example.michael.test2;
 
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -43,10 +44,12 @@ public class GradientSeekBar implements SeekBar.OnSeekBarChangeListener, TextWat
     }
 
     @Override
-    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+    public void onProgressChanged(SeekBar seekBar, int i, boolean fromUser) {
         progress = i;
         text.setText(String.valueOf(progress));
-        callback.onColorChange();
+        if (fromUser) {
+            callback.onColorChange();
+        }
     }
 
     @Override
@@ -104,6 +107,7 @@ public class GradientSeekBar implements SeekBar.OnSeekBarChangeListener, TextWat
             progress = textProgress;
             slider.setProgress(textProgress);
             text.setSelection(selectionPlace);
+            callback.onColorChange();
         } catch (Exception e){
 
         }

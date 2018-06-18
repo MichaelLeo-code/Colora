@@ -34,17 +34,13 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryFragment extends Fragment {
+public class LibraryFragment extends Fragment implements ColorProvider {
 
     private static final String filename = "myfile";
     private static final String COLORS_FILE = "colors";
     private static final String ERROR = "Error";
 
-    private String fileContents = "Hello world!";
-    private Button saveSomeDataButton;
-    private TextView testText;
     private String getText;
-    private Button showText;
     private ColorItemListAdapter adapter;
 
     Button buttonAdd;
@@ -60,10 +56,6 @@ public class LibraryFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        saveSomeDataButton = view.findViewById(R.id.save_button);
-        testText = view.findViewById(R.id.saved_data_text);
-        showText = view.findViewById(R.id.show_text);
-
         gridView = (ExpandableHeightGridView) view.findViewById(R.id.gridView);
 
         gridView.setExpanded(true);
@@ -71,34 +63,27 @@ public class LibraryFragment extends Fragment {
         adapter = new ColorItemListAdapter(this);
         gridView.setAdapter(adapter);
 
-        saveSomeDataButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveDataTest();
-            }
-        });
-
-        showText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BufferedReader in = null;
-                try {
-                    in = new BufferedReader(new InputStreamReader(getActivity().openFileInput(filename)));
-                    getText = in.readLine();
-                    testText.setText(getText);
-                } catch (IOException e) {
-                    testText.setText(ERROR);
-                } finally {
-                    if (in != null) {
-                        try {
-                            in.close();
-                        } catch (IOException e) {
-                            // ignore
-                        }
-                    }
-                }
-            }
-        });
+//        showText.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                BufferedReader in = null;
+//                try {
+//                    in = new BufferedReader(new InputStreamReader(getActivity().openFileInput(filename)));
+//                    getText = in.readLine();
+//                    testText.setText(getText);
+//                } catch (IOException e) {
+//                    testText.setText(ERROR);
+//                } finally {
+//                    if (in != null) {
+//                        try {
+//                            in.close();
+//                        } catch (IOException e) {
+//                            // ignore
+//                        }
+//                    }
+//                }
+//            }
+//        });
 
     }
 
@@ -109,24 +94,33 @@ public class LibraryFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_library, container, false);
     }
 
-    private void saveDataTest(){
-        try {
-            FileOutputStream outputStream = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
-            outputStream.write(fileContents.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            testText.setText(ERROR);
-        }
-    }
+//    private void saveDataTest(){
+//        try {
+//            FileOutputStream outputStream = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
+//            outputStream.write(fileContents.getBytes());
+//            outputStream.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            testText.setText(ERROR);
+//        }
+//    }
 
     public void addColor(ColorItem color) {
         colors.add(color);
         adapter.notifyDataSetChanged();
     }
 
-    private List<ColorItem> getColors() {
+    public List<ColorItem> getColors() {
         return colors;
+    }
+
+    @Override
+    public ColorItem getColor(int index) {
+        if (colors.isEmpty()) return null;
+
+        int i = index < 0 ? colors.size() + index : index;
+        if (i < 0 || i >= colors.size()) i = colors.size() - 1;
+        return colors.get(i);
     }
 
     public static class ColorItemListAdapter extends BaseAdapter {
@@ -161,7 +155,11 @@ public class LibraryFragment extends Fragment {
             paintDrawable.setCornerRadius((float) 12.5);
             //paintDrawable.setShape(new RoundRectShape());
             box.setBackground(paintDrawable);
-            ((TextView)listItem.findViewById(R.id.textView)).setText(color.getHexValue());
+            String text = color.getHexValue();
+            if (color.getName() != null && color.getName().length() > 0) {
+                text = color.getName();
+            }
+            ((TextView)listItem.findViewById(R.id.textView)).setText(text);
 
             return listItem;
         }
@@ -222,8 +220,14 @@ public class LibraryFragment extends Fragment {
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
-            testText.setText(ERROR);
         }
     }
+
+    public void applyColorName(String colorName){
+        colors.get(colors.size() - 1).setName(colorName);
+        adapter.notifyDataSetChanged();
+    }
+
+
 
 }

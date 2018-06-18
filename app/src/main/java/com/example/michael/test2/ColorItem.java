@@ -1,11 +1,13 @@
 package com.example.michael.test2;
 
+import android.graphics.Color;
+
 public class ColorItem {
 
     private int r;
     private int g;
     private int b;
-    private String name = "noname";
+    private String name = "";
 
     public ColorItem(int r, int g, int b) {
         this.r = r;
@@ -51,4 +53,7 @@ public class ColorItem {
         this.b = b;
     }
 
+    public int getColor() {
+        return Color.rgb(r, g, b);
+    }
 }

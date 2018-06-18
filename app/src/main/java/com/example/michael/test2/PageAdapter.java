@@ -8,22 +8,27 @@ public class PageAdapter extends FragmentPagerAdapter{
 
     private int numOfTabs;
     private LibraryFragment library;
+    private MainFragment picker;
+    private ColorMixFragment colorMix;
 
     PageAdapter(FragmentManager fm, int numOfTabs) {
         super(fm);
         this.numOfTabs = numOfTabs;
         library = new LibraryFragment();
+        picker = new MainFragment();
+        colorMix = new ColorMixFragment();
+        colorMix.setLibrary(library);
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new MainFragment();
+                return picker;
             case 1:
                 return library;
             case 2:
-                return new TestFragment();
+                return colorMix;
             default:
                 return null;
         }
@@ -36,5 +41,9 @@ public class PageAdapter extends FragmentPagerAdapter{
 
     public LibraryFragment getLibrary() {
         return library;
+    }
+
+    public MainFragment getColorPicker() {
+        return picker;
     }
 }

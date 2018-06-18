@@ -7,10 +7,8 @@
     android:background="#313131"
     tools:context="com.example.michael.test2.MainActivity"
     android:focusableInTouchMode="true"
-    android:id="@+id/main_activity">
-
-
-
+    android:id="@+id/main_activity"
+    android:theme="@android:style/Theme.Holo">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/ttest"

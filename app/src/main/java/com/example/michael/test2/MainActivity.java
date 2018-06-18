@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +31,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity implements ColorSaveListener {
+public class MainActivity extends AppCompatActivity implements ColorSaveListener, NameDialog.NameDialogListener {
 
     private boolean navigationVisible = true;
 
@@ -103,11 +104,23 @@ public class MainActivity extends AppCompatActivity implements ColorSaveListener
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE;
         decorView.setSystemUiVisibility(uiOptions);
         navigationVisible = false;
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     @Override
     public void onColorSave(ColorItem item) {
         LibraryFragment libraryFragment = pageAdapter.getLibrary();
         libraryFragment.addColor(item);
+    }
+
+
+    @Override
+    public void applyName(String colorName) {
+        LibraryFragment libraryFragment = pageAdapter.getLibrary();
+        ColorItem colorItem = pageAdapter.getColorPicker().getColorItem();
+        colorItem.setName(colorName);
+        libraryFragment.addColor(colorItem);
+        pageAdapter.getColorPicker().animateSaveButton();
     }
 }

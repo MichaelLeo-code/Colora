@@ -17,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,6 +50,8 @@ public class MainFragment extends Fragment implements ColorChangeListener {
     private Button buttonSwitch;
     private int caseNumber = 1;
 
+    private Drawable saveButtonDrawable;
+
     private View rgbLayout;
     private View cmykLayout;
 
@@ -67,6 +70,8 @@ public class MainFragment extends Fragment implements ColorChangeListener {
     ColorSaveListener colorSaveListener;
 
     private boolean navigationVisible = true;
+    final Handler h = new Handler();
+
 
     public MainFragment() {
         // Required empty public constructor
@@ -104,6 +109,8 @@ public class MainFragment extends Fragment implements ColorChangeListener {
         saveButton = view.findViewById(R.id.saveButton);
         textHex = view.findViewById(R.id.textHex);
         buttonSwitch = view.findViewById(R.id.buttonSwitch);
+
+        saveButtonDrawable = (Drawable) saveButton.getDrawable();
 
         rgbLayout = view.findViewById(R.id.rgb_layout_fragment_inserted);
         cmykLayout = view.findViewById(R.id.cmyk_layout_fragment_inserted);
@@ -144,13 +151,14 @@ public class MainFragment extends Fragment implements ColorChangeListener {
             public void onClick(View view) {
                 saveColor();
                 animateSaveButton();
-                saveButton.setClickable(false);
-                Handler h = new Handler();
-                h.postDelayed(new Runnable() {
-                    public void run() {
-                        saveButton.setClickable(true);
-                    }
-                }, 500);
+            }
+        });
+
+        saveButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                openDialog();
+                return true;
             }
         });
 
@@ -173,7 +181,6 @@ public class MainFragment extends Fragment implements ColorChangeListener {
 
         updateColor();
 
-        final Handler h = new Handler();
 
 
         textHex.addTextChangedListener(new TextWatcher() {
@@ -208,6 +215,9 @@ public class MainFragment extends Fragment implements ColorChangeListener {
                     sliderR.setProgress(progressR);
                     sliderG.setProgress(progressG);
                     sliderB.setProgress(progressB);
+
+                    GradientDrawable background = (GradientDrawable) colorBox.getBackground();
+                    background.setColor(Color.rgb(colorFromHexR,colorFromHexG,colorFromHexB));
 
                 } catch (NumberFormatException nfe){
                     /*
@@ -265,9 +275,14 @@ public class MainFragment extends Fragment implements ColorChangeListener {
     }
 
 
+    public ColorItem getColorItem() {
+        return new ColorItem(progressR, progressG, progressB);
+    }
+
+
     private void saveColor() {
         if (colorSaveListener != null) {
-            colorSaveListener.onColorSave(new ColorItem(progressR, progressG, progressB));
+            colorSaveListener.onColorSave(getColorItem());
         }
     }
 
@@ -348,15 +363,21 @@ public class MainFragment extends Fragment implements ColorChangeListener {
         }
     }
 
-    private void animateSaveButton(){
-        Drawable d = saveButton.getDrawable();
-        if (d instanceof AnimatedVectorDrawableCompat){
-            AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) d;
+    public void animateSaveButton(){
+        if (saveButtonDrawable instanceof AnimatedVectorDrawableCompat){
+            AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) saveButtonDrawable;
             avd.start();
-        }else if (d instanceof AnimatedVectorDrawable) {
-            AnimatedVectorDrawable avd = (AnimatedVectorDrawable) d;
+        }else if (saveButtonDrawable instanceof AnimatedVectorDrawable) {
+            AnimatedVectorDrawable avd = (AnimatedVectorDrawable) saveButtonDrawable;
             avd.start();
         }
+//        saveButton.setClickable(false);
+//        Handler h = new Handler();
+//        h.postDelayed(new Runnable() {
+//            public void run() {
+//                saveButton.setClickable(true);
+//            }
+//        }, 500);
     }
 
     private void hideNavigationBar() {
@@ -365,6 +386,11 @@ public class MainFragment extends Fragment implements ColorChangeListener {
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE;
         decorView.setSystemUiVisibility(uiOptions);
         navigationVisible = false;
+    }
+
+    private void openDialog(){
+        NameDialog nameDialog = new NameDialog();
+        nameDialog.show(getFragmentManager(), "name dialog");
     }
 
     @Override
