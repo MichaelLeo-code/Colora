@@ -1,121 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".RGBLayoutFragment"
     android:focusableInTouchMode="true"
     android:id="@+id/rgblayout_fragment"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SeekBar
-        android:id="@+id/sliderR"
-        android:layout_width="230dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="8dp"
-        android:maxHeight="10dp"
-        android:minHeight="10dp"
-        android:progress="0"
-        android:progressDrawable="@drawable/slider_blank"
-        android:splitTrack="false"
-        android:thumb="@drawable/vector2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/textR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#00000000"
-        android:inputType="number"
-        android:maxLength="3"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#F5F5F5"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/sliderR"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/sliderR"
-        app:layout_constraintTop_toTopOf="@+id/sliderR"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <SeekBar
-        android:id="@+id/sliderG"
-        android:layout_width="230dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="16dp"
-        android:maxHeight="10dp"
-        android:progress="0"
-        android:progressDrawable="@drawable/slider_blank"
-        android:splitTrack="false"
-        android:thumb="@drawable/vector2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sliderR"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <SeekBar
-        android:id="@+id/sliderB"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="86dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="16dp"
-        android:maxHeight="10dp"
-        android:progress="0"
-        android:progressDrawable="@drawable/slider_blank"
-        android:splitTrack="false"
-        android:thumb="@drawable/vector2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sliderG" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/textG"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="#00000000"
-        android:inputType="number"
-        android:maxLength="3"
-        android:text="TextView"
-        android:textColor="#F5F5F5"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/sliderG"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/sliderG"
-        app:layout_constraintTop_toTopOf="@+id/sliderG"
-        app:layout_constraintVertical_bias="1.0" />
+        <SeekBar
+            android:id="@+id/sliderR"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="18dp"
+            android:clickable="true"
+            android:layout_weight="50"
+            android:maxHeight="10dp"
+            android:minHeight="10dp"
+            android:progress="0"
+            android:progressDrawable="@drawable/slider_blank"
+            android:splitTrack="false"
+            android:thumb="@drawable/vector2" />
 
-    <EditText
-        android:id="@+id/textB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#00000000"
-        android:inputType="number"
-        android:maxLength="3"
-        android:text="TextView"
-        android:textColor="#F5F5F5"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/sliderB"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/sliderB"
-        app:layout_constraintTop_toTopOf="@+id/sliderB"
-        app:layout_constraintVertical_bias="1.0" />
-</android.support.constraint.ConstraintLayout>
+        <EditText
+            android:id="@+id/textR"
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="42dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="0"
+            android:textAlignment="center"
+            android:backgroundTint="#00000000"
+            android:inputType="number"
+            android:maxLength="3"
+            android:text="TextView"
+            android:textColor="#F5F5F5"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <SeekBar
+            android:id="@+id/sliderG"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="18dp"
+            android:layout_weight="50"
+            android:maxHeight="10dp"
+            android:minHeight="10dp"
+            android:progress="0"
+            android:progressDrawable="@drawable/slider_blank"
+            android:splitTrack="false"
+            android:thumb="@drawable/vector2" />
+
+        <EditText
+            android:id="@+id/textG"
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="42dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="0"
+            android:backgroundTint="#00000000"
+            android:inputType="number"
+            android:maxLength="3"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="#F5F5F5"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <SeekBar
+            android:id="@+id/sliderB"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="18dp"
+            android:layout_weight="50"
+            android:maxHeight="10dp"
+            android:minHeight="10dp"
+            android:progress="0"
+            android:progressDrawable="@drawable/slider_blank"
+            android:splitTrack="false"
+            android:thumb="@drawable/vector2"/>
+
+        <EditText
+            android:id="@+id/textB"
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="42dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#00000000"
+            android:inputType="number"
+            android:maxLength="3"
+            android:text="TextView"
+            android:layout_weight="0"
+            android:textAlignment="center"
+            android:textColor="#F5F5F5"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -13,34 +13,35 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/ttest"
         android:layout_height="wrap_content"
+        android:elevation="5dp"
         android:layout_width="match_parent">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:tabSelectedTextColor="@color/materialLight100"
-        app:tabTextColor="#898989">
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/tabMain"
-            android:layout_width="wrap_content"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_colorize_black_24dp" />
+            android:background="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/materialLight100"
+            app:tabTextColor="#898989">
 
-        <android.support.design.widget.TabItem
-            android:id="@+id/tabLibrary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_collections_bookmark_black_24dp" />
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_colorize_black_24dp" />
 
-        <android.support.design.widget.TabItem
-            android:id="@+id/tabTest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_error_outline_black_24dp" />
-    </android.support.design.widget.TabLayout>
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabLibrary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_collections_bookmark_black_24dp" />
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_error_outline_black_24dp" />
+        </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager

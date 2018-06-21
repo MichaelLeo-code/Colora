@@ -47,7 +47,8 @@ public class MainFragment extends Fragment implements ColorChangeListener {
     private int colorFromHexR;
     private int colorFromHexG;
     private int colorFromHexB;
-    private Button buttonSwitch;
+    private ImageButton buttonSwitch;
+    private TextView buttonSwitchText;
     private int caseNumber = 1;
 
     private Drawable saveButtonDrawable;
@@ -109,6 +110,7 @@ public class MainFragment extends Fragment implements ColorChangeListener {
         saveButton = view.findViewById(R.id.saveButton);
         textHex = view.findViewById(R.id.textHex);
         buttonSwitch = view.findViewById(R.id.buttonSwitch);
+        buttonSwitchText = view.findViewById(R.id.buttonSwitchText);
 
         saveButtonDrawable = (Drawable) saveButton.getDrawable();
 
@@ -127,17 +129,17 @@ public class MainFragment extends Fragment implements ColorChangeListener {
                 }
                 switch (caseNumber) {
                     case 1:
-                        buttonSwitch.setText("RGB");
+                        buttonSwitchText.setText("RGB");
                         rgbLayout.setVisibility(View.VISIBLE);
                         cmykLayout.setVisibility(View.INVISIBLE);
                         break;
                     case 2:
-                        buttonSwitch.setText("CMYK");
+                        buttonSwitchText.setText("CMYK");
                         rgbLayout.setVisibility(View.INVISIBLE);
                         cmykLayout.setVisibility(View.VISIBLE);
                         break;
                     case 3:
-                        buttonSwitch.setText("");
+                        buttonSwitchText.setText("");
                         rgbLayout.setVisibility(View.INVISIBLE);
                         cmykLayout.setVisibility(View.INVISIBLE);
                         break;

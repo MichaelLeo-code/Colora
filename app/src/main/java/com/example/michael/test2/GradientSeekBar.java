@@ -64,6 +64,8 @@ public class GradientSeekBar implements SeekBar.OnSeekBarChangeListener, TextWat
         animate();
     }
 
+
+
     public int getMax() {
         return max;
     }
