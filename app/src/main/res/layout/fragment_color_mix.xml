@@ -38,24 +38,32 @@
         app:layout_constraintVertical_bias="0.0">
 
         <Spinner
-            android:id="@+id/Color1Spinner"
+            android:id="@+id/color1spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_weight="0"
+            android:popupBackground="#313131"
+            android:backgroundTint="#00000000"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <Spinner
-            android:id="@+id/Color2Spinner"
+            android:id="@+id/color2spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_weight="1" />
+            android:layout_weight="0"
+            android:popupBackground="#313131" />
 
     </LinearLayout>
 

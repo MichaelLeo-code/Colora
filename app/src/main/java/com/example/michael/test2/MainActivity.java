@@ -28,8 +28,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toolbar;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements ColorSaveListener, NameDialog.NameDialogListener {
 
@@ -43,6 +46,12 @@ public class MainActivity extends AppCompatActivity implements ColorSaveListener
     private TabItem tabTest;
     private int iconColor;
     private int iconColorSelected;
+
+    private Spinner spinner1;
+    private Spinner spinner2;
+
+    private ArrayList<ColorItemForSpinner> mColor4spinnerList;
+    private CustomSpinnerAdapter mAdapter;
 
 //  private Toast hexCopy;
 
@@ -91,10 +100,6 @@ public class MainActivity extends AppCompatActivity implements ColorSaveListener
         });
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener((tabLayout)));
-
-
-        findViewById(R.id.main_activity).requestFocus();
-        hideNavigationBar();
 
     }
 
