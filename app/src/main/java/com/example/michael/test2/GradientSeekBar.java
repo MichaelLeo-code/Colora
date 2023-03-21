@@ -1,19 +1,22 @@
 package com.example.michael.test2;
 
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
-import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
 
-public class GradientSeekBar implements SeekBar.OnSeekBarChangeListener, TextWatcher {
+import static android.content.ContentValues.TAG;
+
+public class GradientSeekBar implements SeekBar.OnSeekBarChangeListener, TextWatcher, SeekBar.OnTouchListener{
 
     private Drawable shrinkAnimation;
     private Drawable growAnimation;
@@ -54,14 +57,13 @@ public class GradientSeekBar implements SeekBar.OnSeekBarChangeListener, TextWat
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-        slider.setThumb(growAnimation);
-        animate();
+//        slider.setThumb(growAnimation);
+//        animate();
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        slider.setThumb(shrinkAnimation);
-        animate();
+
     }
 
 
@@ -127,8 +129,34 @@ public class GradientSeekBar implements SeekBar.OnSeekBarChangeListener, TextWat
                 }
             }, 1000);
         }
-
     }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_MOVE){
+            Log.i(TAG ,"Moved , process data, Moved to :" + slider.getProgress());
+            slider.setProgress(slider.getProgress());
+            return false;
+        } else if (event.getAction() == MotionEvent.ACTION_UP){
+            Log.i(TAG ,"Ended , Progress :" + slider.getProgress());
+            slider.setThumb(shrinkAnimation);
+            animate();
+            return false;
+        } else if (slider.getThumb() == growAnimation){
+            h.postDelayed(new Runnable() {
+                public void run() {
+                    slider.setThumb(shrinkAnimation);
+                    animate();
+                }
+            }, 100);
+        }
+        Log.d(TAG, "Touched , Progress :" + slider.getProgress() + "X :" + event.getX());
+//        slider.setProgress((int) ((event.getX()-48)/622*255));
+        slider.setThumb(growAnimation);
+        animate();
+        return false;
+    }
+
     public void setColors(int[] colors) {
         GradientDrawable sliderBackground = (GradientDrawable) slider.getProgressDrawable();
         sliderBackground.setColors(colors);
@@ -137,6 +165,7 @@ public class GradientSeekBar implements SeekBar.OnSeekBarChangeListener, TextWat
     public void listen() {
         if (!isListening) {
             slider.setOnSeekBarChangeListener(this);
+            slider.setOnTouchListener(this);
             text.addTextChangedListener(this);
             isListening = true;
         }

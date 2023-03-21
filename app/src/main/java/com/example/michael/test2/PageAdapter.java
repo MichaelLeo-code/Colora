@@ -1,8 +1,8 @@
 package com.example.michael.test2;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 public class PageAdapter extends FragmentPagerAdapter{
 
@@ -10,6 +10,7 @@ public class PageAdapter extends FragmentPagerAdapter{
     private LibraryFragment library;
     private MainFragment picker;
     private ColorMixFragment colorMix;
+    private PhotoPickerFragment photoPicker;
 
     PageAdapter(FragmentManager fm, int numOfTabs) {
         super(fm);
@@ -17,6 +18,7 @@ public class PageAdapter extends FragmentPagerAdapter{
         library = new LibraryFragment();
         picker = new MainFragment();
         colorMix = new ColorMixFragment();
+        photoPicker = new PhotoPickerFragment();
         colorMix.setLibrary(library);
     }
 
@@ -29,6 +31,8 @@ public class PageAdapter extends FragmentPagerAdapter{
                 return library;
             case 2:
                 return colorMix;
+            case 3:
+                return photoPicker;
             default:
                 return null;
         }

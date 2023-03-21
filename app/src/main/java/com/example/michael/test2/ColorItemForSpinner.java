@@ -1,14 +1,21 @@
 package com.example.michael.test2;
 
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 
 public class ColorItemForSpinner {
-    private int mIconImage;
+    private GradientDrawable mIconImage;
+    private int mColor;
 
-    public ColorItemForSpinner(int iconImage){
+    public ColorItemForSpinner(GradientDrawable iconImage, int color){
         mIconImage = iconImage;
+        mColor = color;
     }
-    public int getIconImage(){
+    public GradientDrawable getIconImage(){
         return mIconImage;
+    }
+
+    public int getColor() {
+        return mColor;
     }
 }
