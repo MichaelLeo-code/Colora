@@ -9,9 +9,11 @@ Installing it on your Android device (target API Android 7, API level 24), you c
 • Switch between CMYK and RGB sliders  
 • Save colors and give them a name.  
 
-Have a look at the general feature of choosing a color!
+## Have a look at the general feature of choosing a color:
+
 https://github.com/MichaelLeo-code/Colora/assets/114170504/fadc763c-7f03-43ff-97ca-a9e0ab9a1725
 
-Have a look at the feature of saving and using the saved colors!
+## Have a look at the feature of saving and using the saved colors:
+
 https://github.com/MichaelLeo-code/Colora/assets/114170504/b9b5ed8b-9d84-48e1-bcc2-a073f626fc22
 
